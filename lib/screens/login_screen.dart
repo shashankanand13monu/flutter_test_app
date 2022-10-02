@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:ytel_app/screens/dashboard_screen.dart';
 
 import '../widgets/dialog_box.dart';
+import 'navigation_controller.dart';
 
 class LoginPage extends StatelessWidget {
   final username_controller = TextEditingController();
@@ -57,7 +58,7 @@ class LoginPage extends StatelessWidget {
             userdata.write('isLogged', true);
             userdata.write('email', email);
 
-                    Get.offAll(DashBoard());
+                    Get.offAll(NavigationScreen());
           }
           print(data);
         } else {
