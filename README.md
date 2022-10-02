@@ -33,11 +33,9 @@ lib/
 ## Branching Phases
 Here are the diffrent phases & what's being done.
 
-- Phase 0 or master branch
-User Authentication, Login Screen
+- Phase 0 or master branch: User Authentication, Login Screen
 
-- Phase 1
-Dashboard, Bottom Navigation Bar, SideBar
+- Phase 1: Dashboard, Bottom Navigation Bar, SideBar
 
 
 This project is a starting point for a Flutter application.
