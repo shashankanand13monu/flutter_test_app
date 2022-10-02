@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:ytel_app/screens/dashboard_screen.dart';
 import 'package:ytel_app/screens/login_screen.dart';
+import 'package:ytel_app/screens/navigation_controller.dart';
 
 
 
@@ -61,7 +62,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void checkiflogged() {
-    userdate.read('isLogged') ? Get.offAll(DashBoard()) : Get.offAll(LoginPage());
+    userdate.read('isLogged') ? Get.offAll(NavigationScreen()) : Get.offAll(LoginPage());
   }
   
 }
