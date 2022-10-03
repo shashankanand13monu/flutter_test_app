@@ -3,11 +3,12 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
-import 'package:ytel_app/screens/chat_screen.dart';
-import 'package:ytel_app/screens/login_screen.dart';
-import 'package:ytel_app/screens/navigation_controller.dart';
+import 'package:ytel_app/Context%20Center/screens/chat_screen.dart';
+import 'package:ytel_app/Context%20Center/screens/login_screen.dart';
+import 'package:ytel_app/Context%20Center/screens/navigation_controller.dart';
+import 'package:ytel_app/Universe/widgets/app_drawer.dart';
 
-import '../widgets/neuporphic_tile.dart';
+import '../../Universe/widgets/neuporphic_tile.dart';
 
 class DashBoard extends StatelessWidget {
   final userdata = GetStorage();
@@ -18,87 +19,7 @@ class DashBoard extends StatelessWidget {
       appBar: AppBar(
         title: Text("Dashboard"),
       ),
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            DrawerHeader(
-              // Drawer background in blue color
-              decoration: BoxDecoration(
-                color: Colors.blueAccent,
-              ),
-
-              // Insert Profile Image and email
-              child: Column(
-                children: [
-                  CircleAvatar(
-                    //Black Border
-                    backgroundColor: Colors.black,
-                    //Border radius
-
-                    radius: 40,
-                    backgroundImage: NetworkImage(
-                        "https://media.istockphoto.com/photos/portrait-of-smiling-caucasian-man-pose-in-office-picture-id1303206644?k=20&m=1303206644&s=612x612&w=0&h=B_CmLsEzLVKNb11awhk2S8HZkIoNpgBEe-dECLlYq0Y="),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    userdata.read('email'),
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            ListTile(
-              leading: Icon(Icons.home),
-              title: Text("Home"),
-              onTap: () {
-                //Go to Dasboard
-                Get.to(NavigationScreen());
-              },
-            ),
-            //ListTile Chat
-            ListTile(
-              leading: Icon(Icons.chat),
-              title: Text("Chat"),
-              onTap: () {
-                Get.to(ChatScreen());
-              },
-            ),
-            //ListTile Settings
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text("Settings"),
-              onTap: () {
-                //Go to Dasboard
-                Get.to(NavigationScreen());
-              },
-            ),
-            //ListTile Feedback
-            ListTile(
-              leading: Icon(Icons.feedback),
-              title: Text("Feedback"),
-              onTap: () {
-                //Go to Dasboard
-                Get.to(NavigationScreen());
-              },
-            ),
-            Divider(),
-            ListTile(
-              title: Text("Logout"),
-              //Logout icon
-              leading: Icon(Icons.logout),
-              onTap: () {
-                userdata.remove("token");
-                Get.offAll(LoginPage());
-              },
-            )
-          ],
-        ),
-      ),
+      drawer: AppDrawer(),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.only(top: 20),

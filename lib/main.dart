@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:ytel_app/screens/dashboard_screen.dart';
-import 'package:ytel_app/screens/login_screen.dart';
-import 'package:ytel_app/screens/navigation_controller.dart';
+import 'package:ytel_app/Context%20Center/screens/dashboard_screen.dart';
+import 'package:ytel_app/Context%20Center/screens/login_screen.dart';
+import 'package:ytel_app/Context%20Center/screens/navigation_controller.dart';
 
 
 

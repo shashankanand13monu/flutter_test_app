@@ -5,22 +5,34 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:ytel_app/screens/dashboard_screen.dart';
+import 'package:ytel_app/Context%20Center/screens/dashboard_screen.dart';
 
-import '../widgets/dialog_box.dart';
+import '../../Universe/widgets/dialog_box.dart';
 import 'navigation_controller.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final username_controller = TextEditingController();
+
   final password_controller = TextEditingController();
 
   final userdata = GetStorage();
+  //Loading Variable
+  bool _loading = false;
 
   @override
   Widget build(BuildContext context) {
     //!All Functions Here:
 
     void login_user(String email, String password) async {
+      setState(() {
+        _loading = true;
+      
+      });
       Map<String, String> body = {
         'captcha': '',
         'grantType': "resource_owner_credentials",
@@ -40,7 +52,10 @@ class LoginPage extends StatelessWidget {
             });
 
         if (response.statusCode == 200) {
-          // print("Login Success");
+          setState(() {
+            _loading = false;
+          
+          });
           //Display Dialog Box
           var data = jsonDecode(response.body.toString());
           showDialog(
@@ -57,12 +72,25 @@ class LoginPage extends StatelessWidget {
 
             userdata.write('isLogged', true);
             userdata.write('email', email);
+            
 
                     Get.offAll(NavigationScreen());
+                    //Show Dialog of Login Succes
+                    showDialog(
+              context: context,
+              builder: (BuildContext context) => DialogBox(
+                    text: "Login Success",
+                  ));
+
+
           }
           print(data);
         } else {
-          print("Login Failed...");
+          // print("Login Failed...");
+          setState(() {
+            _loading = false;
+          
+          });
           //Display Dialog Box
           showDialog(
               context: context,
@@ -109,6 +137,9 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
             ),
+            _loading==true? 
+            //Loading Widget
+            CircularProgressIndicator():
             Container(
               width: 140,
               height: 50,
@@ -119,17 +150,7 @@ class LoginPage extends StatelessWidget {
 
                   login_user(username, password);
 
-                  // if (username != '' && password != '') {
-                  //   print('Successfull');
-
-                  //   userdata.write('isLogged', true);
-                  //   userdata.write('username', username);
-
-                  //   Get.offAll(DashBoard());
-                  // } else {
-                  //   Get.snackbar("Error", "Please Enter Username & Password",
-                  //       snackPosition: SnackPosition.BOTTOM);
-                  // }
+                  
                 },
                 child: Text(
                   'Login',
