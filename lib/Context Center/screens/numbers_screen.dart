@@ -1,8 +1,5 @@
-//import material.dart
 import 'dart:convert';
 import 'dart:async';
-// import 'dart:html';
-// import 'dart:html';
 import 'dart:io';
 import 'dart:math';
 
@@ -11,11 +8,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-//import http
+
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:ytel_app/Context%20Center/screens/dashboard_screen.dart';
+import 'package:ytel_app/Context%20Center/screens/login_screen2.dart';
+
+import 'package:ytel_app/Context%20Center/screens/navigation_controller.dart';
+import 'package:ytel_app/Context%20Center/screens/number_details.dart';
+import 'package:ytel_app/Context%20Center/screens/welcome.dart';
 import 'package:ytel_app/main.dart';
 
 import '../../Universe/widgets/app_drawer.dart';
@@ -34,8 +36,10 @@ class _NumberScreenState extends State<NumberScreen> {
   // List<GetNumbersAPI>? apiList;
 
   var apiList;
+
   //Generate random number int
   int count = 10;
+  bool search_pressed = false;
   List<String> number_list = [];
   List<String> number_list2 = [];
   String query = '';
@@ -60,13 +64,29 @@ class _NumberScreenState extends State<NumberScreen> {
             //Search icon in the end of appbar
             actions: [
               IconButton(
-                onPressed: () {},
+                onPressed: () async {
+                  PermissionStatus status = await Permission.storage.request();
+
+                  if (status == PermissionStatus.granted) {
+                    downloadAPIinCSV();
+                    print("Granted");
+                  }
+                },
+                icon: Icon(Icons.download),
+              ),
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    search_pressed = !search_pressed;
+                  });
+                },
                 icon: Icon(Icons.search),
               ),
+              //Download icon
             ],
             leading: IconButton(
               onPressed: () {
-                Get.to(() => DashBoard());
+                Get.to(() => NavigationScreen());
               },
               icon: Icon(Icons.arrow_back),
             ),
@@ -106,58 +126,24 @@ class _NumberScreenState extends State<NumberScreen> {
                           ),
                         ),
                       ),
-                    //two Icons titled "Add" and "Refresh"
+
+                    if (apiList != null && search_pressed) searchNum(),
+                    //Table heading
                     if (apiList != null)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () async {
-                              PermissionStatus status =
-                                  await Permission.storage.request();
-
-                              if (status == PermissionStatus.granted) {
-                                downloadAPIinCSV();
-                                print("Granted");
-                              }
-                            },
-                            child: Row(
-                              children: [
-                                Icon(Icons.download),
-                                Text('Call Registry Export'),
-                              ],
-                            ),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              downloadAPIinCSV();
-                            },
-                            child: Row(
-                              children: [
-                                Icon(Icons.download),
-                                Text('Export'),
-                              ],
-                            ),
-                          ),
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.only(left: 25, right: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Number",
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold)),
+                            Text("Details",
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold)),
+                          ],
+                        ),
                       ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    //Search Field
-
-                    // searchNum(),
-                    // Expanded(
-                    //   child: ListView.builder(
-                    //       itemCount: number_list.length,
-                    //       itemBuilder: (context, index) {
-                    //         final numb = number_list[index];
-                    //         return ListTile(
-                    //           title: Text(number_list[index]),
-                    //         );
-                    //       }),
-                    // ),
-                    if (apiList != null) searchNum(),
                     if (apiList != null) getNumbers(),
                   ],
                 ),
@@ -210,55 +196,40 @@ class _NumberScreenState extends State<NumberScreen> {
           shrinkWrap: true,
           itemBuilder: (context, index) {
             // mapTheNumber();
-            return Card(
-              elevation: 1,
-              shadowColor: Colors.black,
-              color: Color.fromARGB(255, 91, 172, 231),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              child: GestureDetector(
-                onTap: () {
-                  print(index);
-                },
-                child: ListTile(
-                  title: //text from Payload list
+            return Container(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 15, right: 20),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(number_list[index],
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.blue,
+                            )),
 
-                      Text(number_list[index]),
-                  trailing: //Info and edit button
-                      Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text('Details'),
-                                  content: Text(
-                                      'accountSid: ${apiList['payload'][index]['accountSid']} \n phoneSid: ${apiList['payload'][index]['phoneSid']} \n phoneNumber: ${apiList['payload'][index]['phoneNumber']} \n voiceUrl: ${apiList['payload'][index]['voiceUrl']} \n voiceMethod: ${apiList['payload'][index]['voiceMethod']} \n voiceFallbackUrl: ${apiList['payload'][index]['voiceFallbackUrl']} \n voiceFallbackMethod: ${apiList['payload'][index]['voiceFallbackMethod']} \n renewalDate: ${apiList['payload'][index]['renewalDate']} \n purchaseDate: ${apiList['payload'][index]['purchaseDate']} \n region: ${apiList['payload'][index]['region']} \n timezone: ${apiList['payload'][index]['timezone']} \n smsUrl: ${apiList['payload'][index]['smsUrl']} \n smsMethod: ${apiList['payload'][index]['smsMethod']} \n smsFallbackUrl: ${apiList['payload'][index]['smsFallbackUrl']} \n smsFallbackMethod: ${apiList['payload'][index]['smsFallbackMethod']} \n heartbeatUrl: ${apiList['payload'][index]['heartbeatUrl']} \n heartbeatMethod: ${apiList['payload'][index]['heartbeatMethod']} \n hangupCallbackUrl: ${apiList['payload'][index]['hangupCallbackUrl']} \n hangupCallbackMethod: ${apiList['payload'][index]['hangupCallbackMethod']}'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text('Close'),
-                                    ),
-                                  ],
-                                );
-                              });
-                        },
-                        color: Colors.white,
-                        icon: Icon(Icons.info),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        color: Colors.white,
-                        icon: Icon(Icons.edit),
-                      ),
-                    ],
-                  ),
+                        //Arrao icon to show the status of the number
+                        IconButton(
+                          onPressed: () {
+                            // NumberDetalis(apiList: apiList, index: index);
+                            Get.to(NumberDetalis(
+                              apiList: apiList,
+                              ind: index,
+                            ));
+
+                            // print(index);
+                          },
+                          icon: Icon(Icons.arrow_circle_right,
+                              color: Colors.grey, size: 30),
+                        ),
+                      ],
+                    ),
+                    Divider(
+                      thickness: 1,
+                    ),
+                  ],
                 ),
               ),
             );
@@ -408,6 +379,7 @@ class _NumberScreenState extends State<NumberScreen> {
 
         setState(() {
           apiList = data;
+          
           for (Map i in apiList['payload']) {
             number_list2.add(i['phoneNumber']);
           }
@@ -426,7 +398,7 @@ class _NumberScreenState extends State<NumberScreen> {
                 TextButton(
                     onPressed: () {
                       userdata.erase();
-                      Get.offAll(LoginPage());
+                      Get.offAll(() => LoginScreen2());
                     },
                     child: Text('Login'))
               ],
@@ -450,6 +422,10 @@ class _NumberScreenState extends State<NumberScreen> {
       final queryLower = query.toLowerCase();
 
       return numLower.contains(queryLower);
+
+      
+
+      // return numLower.contains(apiList['payload'][0]['phoneNumber']);
     }).toList();
 
     setState(() {
@@ -459,6 +435,9 @@ class _NumberScreenState extends State<NumberScreen> {
         number_list = number_list2;
       }
       // print("Numbers: ${this.number_list}");
+      //Add Searched Number to new list of all api data
+      // apiListofAllDataCopy['payload'].add(number_list);
+      // print(apiListofAllDataCopy);
     });
   }
 

@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:ytel_app/Context%20Center/screens/dashboard_screen.dart';
 import 'package:ytel_app/Context%20Center/screens/login_screen.dart';
+import 'package:ytel_app/Context%20Center/screens/login_screen2.dart';
 import 'package:ytel_app/Context%20Center/screens/navigation_controller.dart';
+import 'package:ytel_app/Context%20Center/screens/welcome.dart';
 
 
 
@@ -62,7 +64,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void checkiflogged() {
-    userdate.read('isLogged') ? Get.offAll(NavigationScreen()) : Get.offAll(LoginPage());
+    userdate.read('isLogged') ? Get.offAll(NavigationScreen()) : Get.offAll(Welcome());
   }
   
 }

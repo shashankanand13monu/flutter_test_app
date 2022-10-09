@@ -16,7 +16,7 @@ class NeuTile extends StatelessWidget {
   const NeuTile({
     Key? key,
     required this.title,
-    required this.subtitle,
+    this.subtitle='',
     required this.color,
     this.height = 90,
     this.width = 100,
@@ -46,28 +46,29 @@ class NeuTile extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              //SeizedBox for spacing
+              // SeizedBox for spacing
               SizedBox(
-                height: 10,
+                height: 5,
               ),
               Text(
                 title,
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
+              // SizedBox(
+              //   height: 10,
+              // ),
 
-              Text(
-                subtitle,
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
+              // Text(
+              //   subtitle,
+              //   style: TextStyle(
+              //     fontSize: 15,
+              //     fontWeight: FontWeight.w500,
+              //   ),
+              // ),
             ],
           ),
         ),

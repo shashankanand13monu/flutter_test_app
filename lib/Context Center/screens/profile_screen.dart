@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:ytel_app/Context%20Center/screens/login_screen.dart';
+import 'package:ytel_app/Context%20Center/screens/login_screen2.dart';
+import 'package:ytel_app/Context%20Center/screens/welcome.dart';
 
 class ProfileScreen extends StatelessWidget {
    ProfileScreen({Key? key}) : super(key: key);
@@ -23,7 +25,7 @@ class ProfileScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 userdata.erase();
-                Get.offAll(LoginPage());
+                Get.offAll(Welcome());
                 
               },
               child: Text('Logout'),

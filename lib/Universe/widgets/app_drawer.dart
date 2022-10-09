@@ -2,59 +2,54 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:ytel_app/Context%20Center/screens/navigation_controller.dart';
 import 'package:ytel_app/Context%20Center/screens/numbers_screen.dart';
+import 'package:ytel_app/Context%20Center/screens/welcome.dart';
+import 'package:ytel_app/Context%20Center/work_under_progress.dart';
 
 import '../../Context Center/screens/login_screen.dart';
 
 class AppDrawer extends StatelessWidget {
-   AppDrawer({Key? key}) : super(key: key);
+  AppDrawer({Key? key}) : super(key: key);
   final userdata = GetStorage();
-
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
-        
         children: [
           DrawerHeader(
-            decoration: 
-                BoxDecoration(color: Colors.blue),
-
+            decoration: BoxDecoration(color: Colors.blue),
             child: Column(
-              
-                children: [
-                  CircleAvatar(
-                    //Black Border
-                    backgroundColor: Colors.grey,
-                    //Border radius
+              children: [
+                CircleAvatar(
+                  //Black Border
+                  backgroundColor: Colors.blueAccent,
+                  //Border radius
 
-                    radius: 40,
-                    backgroundImage: NetworkImage(
-                        "https://media.istockphoto.com/photos/portrait-of-smiling-caucasian-man-pose-in-office-picture-id1303206644?k=20&m=1303206644&s=612x612&w=0&h=B_CmLsEzLVKNb11awhk2S8HZkIoNpgBEe-dECLlYq0Y="),
+                  radius: 30,
+                  child: Image.asset('assets/images/dp_default.png'),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  userdata.read('email'),
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    userdata.read('email'),
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
+          ),
 
-          
           ListTile(
             title: Text('Dashboard'),
             leading: Icon(Icons.dashboard),
             onTap: () {
-              // Update the state of the app.
-              // ...
+              Get.offAll(() => NavigationScreen());
             },
           ),
           ListTile(
@@ -62,7 +57,8 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(Icons.inbox),
             onTap: () {
               // Update the state of the app.
-              // ...
+              Get.to(UnderProgress());
+              
             },
           ),
           //Expansion Tile for "Contacts" into  "Contacts","Contact import Status","Attributes" without leading icon
@@ -72,29 +68,40 @@ class AppDrawer extends StatelessWidget {
             children: [
               ListTile(
                 title: Text('Contacts'),
+                leading: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
                 onTap: () {
                   // Update the state of the app.
-                  // ...
+                  Get.to(UnderProgress());
                 },
               ),
               ListTile(
                 title: Text('Contact import Status'),
+                leading: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
                 onTap: () {
                   // Update the state of the app.
-                  // ...
+                  Get.to(UnderProgress());
                 },
               ),
               ListTile(
                 title: Text('Attributes'),
+                leading: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
                 onTap: () {
                   // Update the state of the app.
-                  // ...
+                  Get.to(UnderProgress());
                 },
               ),
             ],
           ),
-          
-          
+
           //Expansion Tile for "Workflow" into  "Workflows","Message templates","Webhooks","Enrollment" without leading icon
           ExpansionTile(
             title: Text('Workflow'),
@@ -102,66 +109,92 @@ class AppDrawer extends StatelessWidget {
             children: [
               ListTile(
                 title: Text('Workflows'),
+                leading: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
                 onTap: () {
                   // Update the state of the app.
-                  // ...
+                  Get.to(UnderProgress());
                 },
               ),
               ListTile(
                 title: Text('Message templates'),
+                leading: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
                 onTap: () {
                   // Update the state of the app.
-                  // ...
+                  Get.to(UnderProgress());
                 },
               ),
               ListTile(
                 title: Text('Webhooks'),
+                leading: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
                 onTap: () {
                   // Update the state of the app.
-                  // ...
+                  Get.to(UnderProgress());
                 },
               ),
               ListTile(
                 title: Text('Enrollment'),
+                leading: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
                 onTap: () {
                   // Update the state of the app.
-                  // ...
+                  Get.to(UnderProgress());
                 },
               ),
             ],
           ),
-          
-         
+
           //Expansion Tile for "tracking" into  "Tracking Numbers","Routes","Timezone"
           ExpansionTile(
             title: Text('Tracking'),
             leading: Icon(Icons.cable),
-            
             children: [
               ListTile(
                 title: Text('Tracking Numbers'),
+                leading: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
                 onTap: () {
                   // Update the state of the app.
-                  // ...
+                  Get.to(UnderProgress());
                 },
               ),
               ListTile(
                 title: Text('Routes'),
+                leading: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
                 onTap: () {
                   // Update the state of the app.
-                  // ...
+                  Get.to(UnderProgress());
                 },
               ),
               ListTile(
                 title: Text('Timezone'),
+                leading: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
                 onTap: () {
                   // Update the state of the app.
-                  // ...
+                  Get.to(UnderProgress());
                 },
               ),
             ],
           ),
-          
+
           //Expansion Tile for "Numbers" into  "Purchase","Manage","Number Sets"
           ExpansionTile(
             title: Text('Numbers'),
@@ -169,13 +202,21 @@ class AppDrawer extends StatelessWidget {
             children: [
               ListTile(
                 title: Text('Purchase'),
+                leading: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
                 onTap: () {
                   // Update the state of the app.
-                  // ...
+                  Get.to(UnderProgress());
                 },
               ),
               ListTile(
                 title: Text('Manage'),
+                leading: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
                 onTap: () {
                   //Go to Numbers Screen
                   Get.to(NumberScreen());
@@ -183,9 +224,13 @@ class AppDrawer extends StatelessWidget {
               ),
               ListTile(
                 title: Text('Number Sets'),
+                leading: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
                 onTap: () {
                   // Update the state of the app.
-                  // ...
+                  Get.to(UnderProgress());
                 },
               ),
             ],
@@ -195,82 +240,115 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(Icons.analytics),
             onTap: () {
               // Update the state of the app.
-              // ...
+              Get.to(UnderProgress());
             },
           ),
-                   //Expansion Tile for "Settings" into  "Billing","Accounts","Buissness Profiles", "Assests","Api Tokens","Callbacks","CNAM Management","Compilance","Audit" without leading icon
+          //Expansion Tile for "Settings" into  "Billing","Accounts","Buissness Profiles", "Assests","Api Tokens","Callbacks","CNAM Management","Compilance","Audit" without leading icon
           ExpansionTile(
             title: Text('Settings'),
             leading: Icon(Icons.settings),
             children: [
               ListTile(
                 title: Text('Billing'),
+                leading: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
                 onTap: () {
                   // Update the state of the app.
-                  // ...
+                  Get.to(UnderProgress());
                 },
               ),
               ListTile(
                 title: Text('Accounts'),
+                leading: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
                 onTap: () {
                   // Update the state of the app.
-                  // ...
+                  Get.to(UnderProgress());
                 },
               ),
               ListTile(
                 title: Text('Buissness Profiles'),
+                leading: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
                 onTap: () {
                   // Update the state of the app.
-                  // ...
+                  Get.to(UnderProgress());
                 },
               ),
               ListTile(
                 title: Text('Assests'),
+                leading: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
                 onTap: () {
                   // Update the state of the app.
-                  // ...
+                  Get.to(UnderProgress());
                 },
               ),
               ListTile(
                 title: Text('Api Tokens'),
+                leading: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
                 onTap: () {
                   // Update the state of the app.
-                  // ...
+                  Get.to(UnderProgress());
                 },
               ),
               ListTile(
                 title: Text('Callbacks'),
+                leading: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
                 onTap: () {
                   // Update the state of the app.
-                  // ...
+                  Get.to(UnderProgress());
                 },
               ),
               ListTile(
                 title: Text('CNAM Management'),
+                leading: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
                 onTap: () {
                   // Update the state of the app.
-                  // ...
+                  Get.to(UnderProgress());
                 },
               ),
               ListTile(
                 title: Text('Compilance'),
+                leading: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
                 onTap: () {
                   // Update the state of the app.
-                  // ...
+                  Get.to(UnderProgress());
                 },
               ),
               ListTile(
                 title: Text('Audit'),
+                leading: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
                 onTap: () {
                   // Update the state of the app.
-                  // ...
+                  Get.to(UnderProgress());
                 },
               ),
             ],
           ),
-
-
-
 
           //Contact Center
           ListTile(
@@ -278,7 +356,7 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(Icons.contact_support),
             onTap: () {
               // Update the state of the app.
-              // ...
+              Get.to(UnderProgress());
             },
           ),
           //Phone symbol
@@ -287,7 +365,7 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(Icons.phone),
             onTap: () {
               // Update the state of the app.
-              // ...
+              Get.to(UnderProgress());
             },
           ),
           //Logout button
@@ -295,9 +373,8 @@ class AppDrawer extends StatelessWidget {
             title: Text('Add Feature'),
             leading: Icon(Icons.add),
             onTap: () {
-              
               // Update the state of the app.
-              // ...
+              Get.to(UnderProgress());
             },
           ),
           Divider(),
@@ -306,9 +383,8 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(Icons.logout),
             onTap: () {
               userdata.remove("token");
-                Get.offAll(LoginPage());
-              // Update the state of the app.
-              // ...
+              Get.offAll(Welcome());
+              
             },
           ),
         ],
