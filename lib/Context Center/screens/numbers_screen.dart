@@ -23,6 +23,7 @@ import 'package:ytel_app/main.dart';
 import '../../Universe/widgets/app_drawer.dart';
 import '../../Universe/widgets/get_numbers_api.dart';
 import '../../Universe/widgets/search_widget.dart';
+import 'edit_phoneNo_screen.dart';
 import 'login_screen.dart';
 
 class NumberScreen extends StatefulWidget {
@@ -138,7 +139,7 @@ class _NumberScreenState extends State<NumberScreen> {
                             Text("Number",
                                 style: TextStyle(
                                     fontSize: 14, fontWeight: FontWeight.bold)),
-                            Text("Details",
+                            Text("Actions   ",
                                 style: TextStyle(
                                     fontSize: 14, fontWeight: FontWeight.bold)),
                           ],
@@ -211,18 +212,35 @@ class _NumberScreenState extends State<NumberScreen> {
                             )),
 
                         //Arrao icon to show the status of the number
-                        IconButton(
-                          onPressed: () {
-                            // NumberDetalis(apiList: apiList, index: index);
-                            Get.to(NumberDetalis(
-                              apiList: apiList,
-                              ind: index,
-                            ));
+                        Row(
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                // NumberDetalis(apiList: apiList, index: index);
 
-                            // print(index);
-                          },
-                          icon: Icon(Icons.arrow_circle_right,
-                              color: Colors.grey, size: 30),
+                                Get.to(EditPhoneNumber(
+                                  phoneId: number_list[index],
+                                ));
+
+                                // print(index);
+                              },
+                              icon: Icon(Icons.edit,
+                                  color: Colors.grey, size: 20),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                // NumberDetalis(apiList: apiList, index: index);
+
+                                Get.to(NumberDetalis(
+                                  phoneNo: number_list[index],
+                                ));
+
+                                // print(index);
+                              },
+                              icon: Icon(Icons.info,
+                                  color: Colors.grey, size: 20),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -379,7 +397,7 @@ class _NumberScreenState extends State<NumberScreen> {
 
         setState(() {
           apiList = data;
-          
+
           for (Map i in apiList['payload']) {
             number_list2.add(i['phoneNumber']);
           }
@@ -422,8 +440,6 @@ class _NumberScreenState extends State<NumberScreen> {
       final queryLower = query.toLowerCase();
 
       return numLower.contains(queryLower);
-
-      
 
       // return numLower.contains(apiList['payload'][0]['phoneNumber']);
     }).toList();
@@ -516,6 +532,10 @@ class _NumberScreenState extends State<NumberScreen> {
 
     String csv = const ListToCsvConverter().convert(rows);
     final String dir;
+    //Now time in string
+    var now = DateTime.now().toString();
+    //remove '.;:' from string
+    var now2 = now.replaceAll(RegExp(r'[.:]'), '');
     if (Platform.isAndroid) {
       dir = "/storage/emulated/0/Download";
     } else {
@@ -525,7 +545,8 @@ class _NumberScreenState extends State<NumberScreen> {
     print(dir);
     //Time in string
 
-    final String path = '$dir/numbers$count.csv';
+    final String path = '$dir/numbers$now2.csv';
+    print(path);
     setState(() {
       count++;
     });
