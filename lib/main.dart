@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -9,7 +10,9 @@ import 'package:ytel_app/Context%20Center/screens/welcome.dart';
 
 
 
-void main() async{
+Future main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
   await GetStorage.init();
   runApp(MyApp());
 }
